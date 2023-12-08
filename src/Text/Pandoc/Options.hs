@@ -58,7 +58,6 @@ import qualified Data.Aeson.Internal.ByteString
 import qualified Data.Aeson.Encoding.Internal
 import qualified Data.Aeson.TH
 import qualified Data.Text
-import qualified Data.Text.Internal
 
 class HasSyntaxExtensions a where
   getExtensions :: a -> Extensions
@@ -518,55 +517,55 @@ instance FromJSON ReaderOptions where
              Object recObj_a1pvI
                -> (((((((((ReaderOptions
                              <$>
-                               ((((Data.Aeson.TH.lookupField parseJSON)
+                               (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                                     "Text.Pandoc.Options.ReaderOptions")
                                    "ReaderOptions")
                                   recObj_a1pvI)
                                  (Data.Aeson.Key.fromString "extensions"))
                             <*>
-                              ((((Data.Aeson.TH.lookupField parseJSON)
+                              (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                                    "Text.Pandoc.Options.ReaderOptions")
                                   "ReaderOptions")
                                  recObj_a1pvI)
                                 (Data.Aeson.Key.fromString "standalone"))
                            <*>
-                             ((((Data.Aeson.TH.lookupField parseJSON)
+                             (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                                   "Text.Pandoc.Options.ReaderOptions")
                                  "ReaderOptions")
                                 recObj_a1pvI)
                                (Data.Aeson.Key.fromString "columns"))
                           <*>
-                            ((((Data.Aeson.TH.lookupField parseJSON)
+                            (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                                  "Text.Pandoc.Options.ReaderOptions")
                                 "ReaderOptions")
                                recObj_a1pvI)
                               (Data.Aeson.Key.fromString "tab-stop"))
                          <*>
-                           ((((Data.Aeson.TH.lookupField parseJSON)
+                           (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                                 "Text.Pandoc.Options.ReaderOptions")
                                "ReaderOptions")
                               recObj_a1pvI)
                              (Data.Aeson.Key.fromString "indented-code-classes"))
                         <*>
-                          ((((Data.Aeson.TH.lookupField parseJSON)
+                          (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                                "Text.Pandoc.Options.ReaderOptions")
                               "ReaderOptions")
                              recObj_a1pvI)
                             (Data.Aeson.Key.fromString "abbreviations"))
                        <*>
-                         ((((Data.Aeson.TH.lookupField parseJSON)
+                         (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                               "Text.Pandoc.Options.ReaderOptions")
                              "ReaderOptions")
                             recObj_a1pvI)
                            (Data.Aeson.Key.fromString "default-image-extension"))
                       <*>
-                        ((((Data.Aeson.TH.lookupField parseJSON)
+                        (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                              "Text.Pandoc.Options.ReaderOptions")
                             "ReaderOptions")
                            recObj_a1pvI)
                           (Data.Aeson.Key.fromString "track-changes"))
                      <*>
-                       ((((Data.Aeson.TH.lookupField parseJSON)
+                       (((((Data.Aeson.TH.lookupFieldOmit omittedField) parseJSON)
                             "Text.Pandoc.Options.ReaderOptions")
                            "ReaderOptions")
                           recObj_a1pvI)
