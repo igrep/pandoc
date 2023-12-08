@@ -42,14 +42,6 @@ import Data.ByteString.Lazy (toChunks)
 import Data.Text (Text, pack, unpack)
 import Data.Time (TimeZone, UTCTime)
 import Data.Unique (hashUnique)
-import Network.Connection (TLSSettings (TLSSettingsSimple))
-import Network.HTTP.Client
-       (httpLbs, responseBody, responseHeaders,
-        Request(port, host, requestHeaders), parseRequest, newManager)
-import Network.HTTP.Client.Internal (addProxy)
-import Network.HTTP.Client.TLS (mkManagerSettings)
-import Network.HTTP.Types.Header ( hContentType )
-import Network.Socket (withSocketsDo)
 import Network.URI (URI(..), parseURI, unEscapeString)
 import System.Directory (createDirectoryIfMissing)
 import System.Environment (getEnv)
@@ -121,35 +113,7 @@ newUniqueHash :: MonadIO m => m Int
 newUniqueHash = hashUnique <$> liftIO Data.Unique.newUnique
 
 openURL :: (PandocMonad m, MonadIO m) => Text -> m (B.ByteString, Maybe MimeType)
-openURL u
- | Just (URI{ uriScheme = "data:",
-              uriPath = upath }) <- parseURI (T.unpack u) = do
-     let (mime, rest) = break (== ',') $ unEscapeString upath
-     let contents = UTF8.fromString $ drop 1 rest
-     return (decodeBase64Lenient contents, Just (T.pack mime))
- | otherwise = do
-     let toReqHeader (n, v) = (CI.mk (UTF8.fromText n), UTF8.fromText v)
-     customHeaders <- map toReqHeader <$> getsCommonState stRequestHeaders
-     disableCertificateValidation <- getsCommonState stNoCheckCertificate
-     report $ Fetching u
-     res <- liftIO $ E.try $ withSocketsDo $ do
-       let parseReq = parseRequest
-       proxy <- tryIOError (getEnv "http_proxy")
-       let addProxy' x = case proxy of
-                            Left _ -> return x
-                            Right pr -> parseReq pr >>= \r ->
-                                return (addProxy (host r) (port r) x)
-       req <- parseReq (unpack u) >>= addProxy'
-       let req' = req{requestHeaders = customHeaders ++ requestHeaders req}
-       let tlsSimple = TLSSettingsSimple disableCertificateValidation False False
-       let tlsManagerSettings = mkManagerSettings tlsSimple  Nothing
-       resp <- newManager tlsManagerSettings >>= httpLbs req'
-       return (B.concat $ toChunks $ responseBody resp,
-               UTF8.toText `fmap` lookup hContentType (responseHeaders resp))
-
-     case res of
-          Right r -> return r
-          Left e  -> throwError $ PandocHttpError u e
+openURL = error "openURL is not supported in WASI"
 
 -- | Read the lazy ByteString contents from a file path, raising an error on
 -- failure.

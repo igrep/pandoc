@@ -64,13 +64,45 @@ import Data.Aeson.TH (deriveJSON)
 import Control.Applicative ((<|>))
 import Data.Yaml
 
+import qualified Data.Aeson.Encoding.Internal
+import qualified Data.Aeson.TH
+
 -- | The type of line-endings to be used when writing plain-text.
 data LineEnding = LF | CRLF | Native deriving (Show, Generic)
 
 -- see https://github.com/jgm/pandoc/pull/4083
 -- using generic deriving caused long compilation times
-$(deriveJSON
-   defaultOptions{ constructorTagModifier = map toLower } ''LineEnding)
+instance ToJSON LineEnding where
+  toJSON
+    = let
+      in
+        \ value_aR3mq
+          -> case value_aR3mq of
+               LF -> String (T.pack "lf")
+               CRLF -> String (T.pack "crlf")
+               Native -> String (T.pack "native")
+  toEncoding
+    = let
+      in
+        \ value_aR3mr
+          -> case value_aR3mr of
+               LF -> Data.Aeson.Encoding.Internal.text (T.pack "lf")
+               CRLF -> Data.Aeson.Encoding.Internal.text (T.pack "crlf")
+               Native -> Data.Aeson.Encoding.Internal.text (T.pack "native")
+instance FromJSON LineEnding where
+  parseJSON
+    = \ value_aR3ms
+        -> case value_aR3ms of
+             String txtX_aR3mt
+               | (txtX_aR3mt == T.pack "lf") -> pure LF
+               | (txtX_aR3mt == T.pack "crlf") -> pure CRLF
+               | (txtX_aR3mt == T.pack "native") -> pure Native
+               | otherwise
+               -> (Data.Aeson.TH.noMatchFail "Text.Pandoc.App.Opt.LineEnding")
+                    (unpack txtX_aR3mt)
+             other_aR3mu
+               -> (Data.Aeson.TH.noStringFail "Text.Pandoc.App.Opt.LineEnding")
+                    (Data.Aeson.TH.valueConName other_aR3mu)
 
 -- | How to handle output blocks in ipynb.
 data IpynbOutput =
@@ -79,8 +111,40 @@ data IpynbOutput =
   | IpynbOutputBest
   deriving (Show, Generic)
 
-$(deriveJSON
-   defaultOptions{ fieldLabelModifier = map toLower . drop 11 } ''IpynbOutput)
+instance ToJSON IpynbOutput where
+  toJSON
+    = let
+      in
+        \ value_aR3sy
+          -> case value_aR3sy of
+               IpynbOutputAll -> String (T.pack "IpynbOutputAll")
+               IpynbOutputNone -> String (T.pack "IpynbOutputNone")
+               IpynbOutputBest -> String (T.pack "IpynbOutputBest")
+  toEncoding
+    = let
+      in
+        \ value_aR3sz
+          -> case value_aR3sz of
+               IpynbOutputAll
+                 -> Data.Aeson.Encoding.Internal.text (T.pack "IpynbOutputAll")
+               IpynbOutputNone
+                 -> Data.Aeson.Encoding.Internal.text (T.pack "IpynbOutputNone")
+               IpynbOutputBest
+                 -> Data.Aeson.Encoding.Internal.text (T.pack "IpynbOutputBest")
+instance FromJSON IpynbOutput where
+  parseJSON
+    = \ value_aR3sA
+        -> case value_aR3sA of
+             String txtX_aR3sB
+               | (txtX_aR3sB == T.pack "IpynbOutputAll") -> pure IpynbOutputAll
+               | (txtX_aR3sB == T.pack "IpynbOutputNone") -> pure IpynbOutputNone
+               | (txtX_aR3sB == T.pack "IpynbOutputBest") -> pure IpynbOutputBest
+               | otherwise
+               -> (Data.Aeson.TH.noMatchFail "Text.Pandoc.App.Opt.IpynbOutput")
+                    (unpack txtX_aR3sB)
+             other_aR3sC
+               -> (Data.Aeson.TH.noStringFail "Text.Pandoc.App.Opt.IpynbOutput")
+                    (Data.Aeson.TH.valueConName other_aR3sC)
 
 -- | Option parser results requesting informational output.
 data OptInfo =

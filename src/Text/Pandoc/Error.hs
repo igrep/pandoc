@@ -25,7 +25,6 @@ import Data.Word (Word8)
 import Data.Text (Text)
 import qualified Data.Text as T
 import GHC.Generics (Generic)
-import Network.HTTP.Client (HttpException)
 import System.Exit (ExitCode (..), exitWith)
 import System.IO (stderr)
 import qualified Text.Pandoc.UTF8 as UTF8
@@ -34,7 +33,7 @@ import Text.Pandoc.Shared (tshow)
 import Citeproc (CiteprocError, prettyCiteprocError)
 
 data PandocError = PandocIOError Text IOError
-                 | PandocHttpError Text HttpException
+                 | PandocHttpError Text String
                  | PandocShouldNeverHappenError Text
                  | PandocSomeError Text
                  | PandocParseError Text

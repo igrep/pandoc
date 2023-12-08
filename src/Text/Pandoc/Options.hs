@@ -4,6 +4,7 @@
 {-# LANGUAGE LambdaCase         #-}
 {-# LANGUAGE OverloadedStrings  #-}
 {-# LANGUAGE TemplateHaskell    #-}
+{-# LANGUAGE MagicHash    #-}
 {- |
    Module      : Text.Pandoc.Options
    Copyright   : Copyright (C) 2012-2023 John MacFarlane
@@ -50,6 +51,14 @@ import Text.Pandoc.Highlighting (Style, pygments)
 import Text.Pandoc.UTF8 (toStringLazy)
 import Data.Aeson.TH (deriveJSON)
 import Data.Aeson
+
+import qualified Data.Aeson.Types.ToJSON
+import qualified Data.Aeson.Key
+import qualified Data.Aeson.Internal.ByteString
+import qualified Data.Aeson.Encoding.Internal
+import qualified Data.Aeson.TH
+import qualified Data.Text
+import qualified Data.Text.Internal
 
 class HasSyntaxExtensions a where
   getExtensions :: a -> Extensions
@@ -379,9 +388,252 @@ defaultKaTeXURL :: Text
 defaultKaTeXURL = "https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/"
 
 -- Update documentation in doc/filters.md if this is changed.
-$(deriveJSON defaultOptions{ fieldLabelModifier =
-                               camelTo2 '-' . drop 6 }
-                            ''ReaderOptions)
+instance ToJSON ReaderOptions where
+  toJSON
+    = let
+      in
+        \ value_a1pv6
+          -> case value_a1pv6 of
+               ReaderOptions arg1_a1pv9 arg2_a1pva arg3_a1pvb arg4_a1pvc
+                             arg5_a1pvd arg6_a1pve arg7_a1pvf arg8_a1pvg arg9_a1pvh
+                 -> Data.Aeson.Types.ToJSON.fromPairs
+                      ((Data.Aeson.Types.ToJSON.pair
+                          (Data.Aeson.Key.fromString "extensions"))
+                         (toJSON arg1_a1pv9)
+                         <>
+                           ((Data.Aeson.Types.ToJSON.pair
+                               (Data.Aeson.Key.fromString "standalone"))
+                              (toJSON arg2_a1pva)
+                              <>
+                                ((Data.Aeson.Types.ToJSON.pair
+                                    (Data.Aeson.Key.fromString "columns"))
+                                   (toJSON arg3_a1pvb)
+                                   <>
+                                     ((Data.Aeson.Types.ToJSON.pair
+                                         (Data.Aeson.Key.fromString "tab-stop"))
+                                        (toJSON arg4_a1pvc)
+                                        <>
+                                          ((Data.Aeson.Types.ToJSON.pair
+                                              (Data.Aeson.Key.fromString
+                                                 "indented-code-classes"))
+                                             (toJSON arg5_a1pvd)
+                                             <>
+                                               ((Data.Aeson.Types.ToJSON.pair
+                                                   (Data.Aeson.Key.fromString "abbreviations"))
+                                                  (toJSON arg6_a1pve)
+                                                  <>
+                                                    ((Data.Aeson.Types.ToJSON.pair
+                                                        (Data.Aeson.Key.fromString
+                                                           "default-image-extension"))
+                                                       (toJSON arg7_a1pvf)
+                                                       <>
+                                                         ((Data.Aeson.Types.ToJSON.pair
+                                                             (Data.Aeson.Key.fromString
+                                                                "track-changes"))
+                                                            (toJSON arg8_a1pvg)
+                                                            <>
+                                                              (Data.Aeson.Types.ToJSON.pair
+                                                                 (Data.Aeson.Key.fromString
+                                                                    "strip-comments"))
+                                                                (toJSON arg9_a1pvh)))))))))
+  toEncoding
+    = let
+        _let5_a1pvB
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               16)
+              "\"abbreviations\":"#
+        _let2_a1pvy
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               10)
+              "\"columns\":"#
+        _let6_a1pvE
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               26)
+              "\"default-image-extension\":"#
+        _let0_a1pvw
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               13)
+              "\"extensions\":"#
+        _let4_a1pvA
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               24)
+              "\"indented-code-classes\":"#
+        _let1_a1pvx
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               13)
+              "\"standalone\":"#
+        _let8_a1pvG
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               17)
+              "\"strip-comments\":"#
+        _let3_a1pvz
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               11)
+              "\"tab-stop\":"#
+        _let7_a1pvF
+          = (Data.Aeson.Internal.ByteString.unsafePackLenLiteral
+               16)
+              "\"track-changes\":"#
+      in
+        \ value_a1pvk
+          -> case value_a1pvk of
+               ReaderOptions arg1_a1pvn arg2_a1pvo arg3_a1pvp arg4_a1pvq
+                             arg5_a1pvr arg6_a1pvs arg7_a1pvt arg8_a1pvu arg9_a1pvv
+                 -> Data.Aeson.Types.ToJSON.fromPairs
+                      ((Data.Aeson.Encoding.Internal.unsafePairSBS _let0_a1pvw)
+                         (toEncoding arg1_a1pvn)
+                         <>
+                           ((Data.Aeson.Encoding.Internal.unsafePairSBS _let1_a1pvx)
+                              (toEncoding arg2_a1pvo)
+                              <>
+                                ((Data.Aeson.Encoding.Internal.unsafePairSBS _let2_a1pvy)
+                                   (toEncoding arg3_a1pvp)
+                                   <>
+                                     ((Data.Aeson.Encoding.Internal.unsafePairSBS _let3_a1pvz)
+                                        (toEncoding arg4_a1pvq)
+                                        <>
+                                          ((Data.Aeson.Encoding.Internal.unsafePairSBS
+                                              _let4_a1pvA)
+                                             (toEncoding arg5_a1pvr)
+                                             <>
+                                               ((Data.Aeson.Encoding.Internal.unsafePairSBS
+                                                   _let5_a1pvB)
+                                                  (toEncoding arg6_a1pvs)
+                                                  <>
+                                                    ((Data.Aeson.Encoding.Internal.unsafePairSBS
+                                                        _let6_a1pvE)
+                                                       (toEncoding arg7_a1pvt)
+                                                       <>
+                                                         ((Data.Aeson.Encoding.Internal.unsafePairSBS
+                                                             _let7_a1pvF)
+                                                            (toEncoding arg8_a1pvu)
+                                                            <>
+                                                              (Data.Aeson.Encoding.Internal.unsafePairSBS
+                                                                 _let8_a1pvG)
+                                                                (toEncoding arg9_a1pvv)))))))))
+instance FromJSON ReaderOptions where
+  parseJSON
+    = \ value_a1pvH
+        -> case value_a1pvH of
+             Object recObj_a1pvI
+               -> (((((((((ReaderOptions
+                             <$>
+                               ((((Data.Aeson.TH.lookupField parseJSON)
+                                    "Text.Pandoc.Options.ReaderOptions")
+                                   "ReaderOptions")
+                                  recObj_a1pvI)
+                                 (Data.Aeson.Key.fromString "extensions"))
+                            <*>
+                              ((((Data.Aeson.TH.lookupField parseJSON)
+                                   "Text.Pandoc.Options.ReaderOptions")
+                                  "ReaderOptions")
+                                 recObj_a1pvI)
+                                (Data.Aeson.Key.fromString "standalone"))
+                           <*>
+                             ((((Data.Aeson.TH.lookupField parseJSON)
+                                  "Text.Pandoc.Options.ReaderOptions")
+                                 "ReaderOptions")
+                                recObj_a1pvI)
+                               (Data.Aeson.Key.fromString "columns"))
+                          <*>
+                            ((((Data.Aeson.TH.lookupField parseJSON)
+                                 "Text.Pandoc.Options.ReaderOptions")
+                                "ReaderOptions")
+                               recObj_a1pvI)
+                              (Data.Aeson.Key.fromString "tab-stop"))
+                         <*>
+                           ((((Data.Aeson.TH.lookupField parseJSON)
+                                "Text.Pandoc.Options.ReaderOptions")
+                               "ReaderOptions")
+                              recObj_a1pvI)
+                             (Data.Aeson.Key.fromString "indented-code-classes"))
+                        <*>
+                          ((((Data.Aeson.TH.lookupField parseJSON)
+                               "Text.Pandoc.Options.ReaderOptions")
+                              "ReaderOptions")
+                             recObj_a1pvI)
+                            (Data.Aeson.Key.fromString "abbreviations"))
+                       <*>
+                         ((((Data.Aeson.TH.lookupField parseJSON)
+                              "Text.Pandoc.Options.ReaderOptions")
+                             "ReaderOptions")
+                            recObj_a1pvI)
+                           (Data.Aeson.Key.fromString "default-image-extension"))
+                      <*>
+                        ((((Data.Aeson.TH.lookupField parseJSON)
+                             "Text.Pandoc.Options.ReaderOptions")
+                            "ReaderOptions")
+                           recObj_a1pvI)
+                          (Data.Aeson.Key.fromString "track-changes"))
+                     <*>
+                       ((((Data.Aeson.TH.lookupField parseJSON)
+                            "Text.Pandoc.Options.ReaderOptions")
+                           "ReaderOptions")
+                          recObj_a1pvI)
+                         (Data.Aeson.Key.fromString "strip-comments"))
+             other_a1pvN
+               -> (((Data.Aeson.TH.parseTypeMismatch' "ReaderOptions")
+                      "Text.Pandoc.Options.ReaderOptions")
+                     "Object")
+                    (Data.Aeson.TH.valueConName other_a1pvN)
 
-$(deriveJSON defaultOptions{ constructorTagModifier = map toLower }
-  ''HTMLSlideVariant)
+instance ToJSON HTMLSlideVariant where
+  toJSON
+    = let
+      in
+        \ value_a1pC1
+          -> case value_a1pC1 of
+               S5Slides -> String (Data.Text.pack "s5slides")
+               SlidySlides -> String (Data.Text.pack "slidyslides")
+               SlideousSlides -> String (Data.Text.pack "slideousslides")
+               DZSlides -> String (Data.Text.pack "dzslides")
+               RevealJsSlides -> String (Data.Text.pack "revealjsslides")
+               NoSlides -> String (Data.Text.pack "noslides")
+  toEncoding
+    = let
+      in
+        \ value_a1pC2
+          -> case value_a1pC2 of
+               S5Slides
+                 -> Data.Aeson.Encoding.Internal.text
+                      (Data.Text.pack "s5slides")
+               SlidySlides
+                 -> Data.Aeson.Encoding.Internal.text
+                      (Data.Text.pack "slidyslides")
+               SlideousSlides
+                 -> Data.Aeson.Encoding.Internal.text
+                      (Data.Text.pack "slideousslides")
+               DZSlides
+                 -> Data.Aeson.Encoding.Internal.text
+                      (Data.Text.pack "dzslides")
+               RevealJsSlides
+                 -> Data.Aeson.Encoding.Internal.text
+                      (Data.Text.pack "revealjsslides")
+               NoSlides
+                 -> Data.Aeson.Encoding.Internal.text
+                      (Data.Text.pack "noslides")
+instance FromJSON HTMLSlideVariant where
+  parseJSON
+    = \ value_a1pC3
+        -> case value_a1pC3 of
+             String txtX_a1pC4
+               | (txtX_a1pC4 == Data.Text.pack "s5slides")
+               -> pure S5Slides
+               | (txtX_a1pC4 == Data.Text.pack "slidyslides")
+               -> pure SlidySlides
+               | (txtX_a1pC4 == Data.Text.pack "slideousslides")
+               -> pure SlideousSlides
+               | (txtX_a1pC4 == Data.Text.pack "dzslides")
+               -> pure DZSlides
+               | (txtX_a1pC4 == Data.Text.pack "revealjsslides")
+               -> pure RevealJsSlides
+               | (txtX_a1pC4 == Data.Text.pack "noslides")
+               -> pure NoSlides
+               | otherwise
+               -> (Data.Aeson.TH.noMatchFail
+                     "Text.Pandoc.Options.HTMLSlideVariant")
+                    (Data.Text.unpack txtX_a1pC4)
+             other_a1pC5
+               -> (Data.Aeson.TH.noStringFail
+                     "Text.Pandoc.Options.HTMLSlideVariant")
+                    (Data.Aeson.TH.valueConName other_a1pC5)

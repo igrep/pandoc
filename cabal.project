@@ -1,11 +1,13 @@
 packages: .
-          pandoc-lua-engine
-          pandoc-server
-          pandoc-cli
-tests: True
+tests: False
 flags: +embed_data_files
 constraints: skylighting-format-blaze-html >= 0.1.1.1,
              skylighting-format-context >= 0.1.0.2
+
+source-repository-package
+  type: git
+  location: https://github.com/igrep/aeson.git
+  tag: 9bacf8d591c982f80f0b28af132ef05bb883d100
 
 -- source-repository-package
 --   type: git
